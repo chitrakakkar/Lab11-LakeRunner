@@ -4,13 +4,13 @@
     <h3>Add new Run</h3>
 
     <form action="/" method="POST">
-        Lake Name: <input name="name" type="text">
+        Lake Name: <input name="name" type="text" required>
         <br>
-        Distance in Miles: <input name="distance" type="number">
+        Distance in Miles: <input name="distance" type="number" required>
         <br>
-        Run Date: <input name="dateRun" type="date">
+        Run Date: <input name="dateRun" type="date" required>
         <br>
-        Run Time in minutes: <input name="time" type="number">
+        Run Time in minutes: <input name="time" type="number" required>
         <br>
         <br>
         <input name="addLake" type="submit" value="Add new Lake">
@@ -23,8 +23,8 @@
     {{# each Lakes}}
         <p>Name: {{this.name}}</p>
         <p>Distance: {{this.distance}}</p>
-        <p>Run Date: {{this.runs.dateRun}}</p>
-        <p>Time Taken: {{this.runs.time}}</p>
+        <p>Run Date: {{this.runs.[0].dateRun}}</p>
+        <p>Time Taken: {{this.runs.[0].time}}</p>
         <hr>
     {{/each}}
 </div>

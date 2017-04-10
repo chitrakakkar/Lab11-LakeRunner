@@ -10,7 +10,7 @@ var LakeSchema = new mongoose.Schema({
     distance : Number,
     runs : [{
         dateRun: {type: Date,
-            default: Date.now(), validate:
+            default: Date.now, validate:
                 {
                 validator:function (date) {
                     //return false if date is in future

@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var flash = require('express-flash');
+var session = require('express-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -16,6 +18,9 @@ mongoose.connect(url);
 
 
 var app = express();
+
+app.use(session({secret:'top secret!'}));
+app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
