@@ -1,0 +1,31 @@
+<h1>Lakes Records</h1>
+
+<div class="addNewRun">
+    <h3>Add new Run</h3>
+
+    <form action="/" method="POST">
+        Lake Name: <input name="name" type="text">
+        <br>
+        Distance in Miles: <input name="distance" type="number">
+        <br>
+        Run Date: <input name="dateRun" type="date">
+        <br>
+        Run Time in minutes: <input name="time" type="number">
+        <br>
+        <br>
+        <input name="addLake" type="submit" value="Add new Lake">
+        <br>
+    </form>
+</div>
+<hr>
+<div class="RunData">
+    <h3>All Runs</h3>
+    {{# each Lakes}}
+        <p>Name: {{this.name}}</p>
+        <p>Distance: {{this.distance}}</p>
+        <p>Run Date: {{this.runs.dateRun}}</p>
+        <p>Time Taken: {{this.runs.time}}</p>
+        <hr>
+    {{/each}}
+</div>
+
