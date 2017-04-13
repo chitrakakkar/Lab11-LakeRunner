@@ -17,7 +17,8 @@ router.get('/', function(req, res, next) {
 /* POST to home page - handle form submit */
 router.post('/', function(req, res, next)
 {
-    //client-side validation done;no blank field would be sent to DB
+    //client-side validation done;no blank field would be sent to the DB
+    //
     var runToSave={RunDate:req.body.dateRun || Date.now(),
         time: req.body.time
     };
@@ -45,4 +46,35 @@ router.post('/', function(req, res, next)
     } );  // end save new lake
 });
 
+
+router.post('/addRun',function(req, res, next)
+{
+
+
+
+
+});
+
+router.post('/deleteLake', function (req, res,err)
+{
+    var lake_to_delete_name= req.body.name;
+    Lake.findOne({name:lake_to_delete_name}, function(err, bird)
+    {
+        if(err)
+        {
+            return next(err)}
+        if(!bird)
+        {
+            return next(new Error('No bird found with name ' + bird_to_delete_name) )
+        }
+        Lake.remove({name:lake_to_delete_name}, function (err)
+        {
+            if(err) {
+                return next(err)
+            }
+            res.redirect('/')
+        })
+    });
+
+});
 module.exports = router;

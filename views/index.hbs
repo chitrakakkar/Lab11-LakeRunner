@@ -25,7 +25,20 @@
         <p>Distance: {{this.distance}}</p>
         <p>Run Date: {{this.runs.[0].dateRun}}</p>
         <p>Time Taken: {{this.runs.[0].time}}</p>
+        <form action="/addRun" method="POST">
+            <input name="dateRun" type="date">
+            <input name="_id" type="hidden" value="{{this._id}}">
+            <input name="name" type="hidden" value="{{this.name}}">
+            <input name="add" type="submit" value="Add new date">
+        </form>
+        <form action="/deleteLake" method="post">
+            <input name="_id" type="hidden" value="{{this._id}}">
+            <input name="name" type="hidden" value="{{this.name}}">
+            <input name="delete" type="submit" value="delete">
+        </form>
         <hr>
     {{/each}}
+
+
 </div>
 
