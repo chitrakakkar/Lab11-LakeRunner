@@ -23,13 +23,21 @@
     {{# each Lakes}}
         <p>Name: {{this.name}}</p>
         <p>Distance: {{this.distance}}</p>
-        <p>Run Date: {{this.runs.[0].dateRun}}</p>
-        <p>Time Taken: {{this.runs.[0].time}}</p>
+        <p>Runs for :{{this.name}} lake </p>
+        <ul>
+            {{#each this.runs}}
+                <li>Run data:{{this.runs.[0].dateRun}}&nbsp&nbsp:{{this.runs.[0].time}}</li>
+            {{else}}
+                <li>No Runs reported</li>
+            {{/each}}
+        </ul>
+
         <form action="/addRun" method="POST">
-            <input name="dateRun" type="date">
+            <input name="dateRun" type="date" required>
+            <input name="time" type="text" required>
             <input name="_id" type="hidden" value="{{this._id}}">
             <input name="name" type="hidden" value="{{this.name}}">
-            <input name="add" type="submit" value="Add new date">
+            <input name="add" type="submit" value="Add new run">
         </form>
         <form action="/deleteLake" method="post">
             <input name="_id" type="hidden" value="{{this._id}}">
@@ -41,4 +49,3 @@
 
 
 </div>
-

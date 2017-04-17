@@ -11,9 +11,9 @@ var session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-var url = 'mongodb://localhost:27017/lakes';
-//var mongo_pw = process.env.MONGO_PW;
-//var url = 'mongodb://admin:' + mongo_pw + '@localhost:27017/birds?authSource=admin';
+//var url = 'mongodb://localhost:27017/lakes';
+var mongo_pw = process.env.MONGO_PW;
+var url = 'mongodb://CK:' + mongo_pw + '@localhost:27017/lakes?authSource=admin';
 mongoose.connect(url);
 
 

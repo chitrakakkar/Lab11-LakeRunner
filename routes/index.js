@@ -6,7 +6,6 @@ var Lake = require('../models/run');
 router.get('/', function(req, res, next) {
     Lake.find(function(err, Lakes)
     {
-        console.log("I am the lake data", Lakes);
         if (err) {
             return next(err);
         }
@@ -49,10 +48,57 @@ router.post('/', function(req, res, next)
 
 router.post('/addRun',function(req, res, next)
 {
+    console.log("I am the body", req.body);
+    if(!req.body.dateRun)
+    {
+        req.flash('error', 'Please provide a date for your run ' + req.body.name);
+        return res.redirect('/');
+    }
+    // Find the lake with the given ID, and add this new date/time to the run array
+    console.log("id", req.body._id);
+    Lake.findById( req.body._id, function(err, lake)
+    {
+        console.log("Here", lake);
 
+        if (err) {
+            return next(err);
+        }
 
+        if (!lake) {
+            res.statusCode = 404;
+            return next(new Error('Not found, Lake_with_id ' + req.body._id))
+        }
+        var runs_data= {dateRun:req.body.dateRun, time:req.body.time};
+        lake.runs.push(runs_data);  // Add new run to runs array
 
+        console.log("Runs", lake.runs);
 
+        //And sort dateRun
+        lake.runs.sort(function(a, b)
+        {
+            if (a.time < b.time) { return 1;  }
+            if (a.time > b.time) { return -1; }
+            return 0;
+        });
+
+        lake.save(function(err){
+            if (err) {
+                if (err.name == 'ValidationError')
+                {
+                    //Loop over error messages and add the message to messages array
+                    var messages = [];
+                    for (var err_name in err.errors) {
+                        messages.push(err.errors[err_name].message);
+                    }
+                    req.flash('error', messages);
+                    return res.redirect('/')
+                }
+                return next(err);   // For all other errors
+            }
+
+            return res.redirect('/');  //If saved successfully, redirect to main page
+        })
+    });
 });
 
 router.post('/deleteLake', function (req, res,err)
