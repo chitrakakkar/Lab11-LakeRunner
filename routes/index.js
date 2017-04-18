@@ -17,11 +17,11 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next)
 {
     //client-side validation done;no blank field would be sent to the DB
-    //
+    // gets daterun from the user or default is date.now();
     var runToSave={RunDate:req.body.dateRun || Date.now(),
         time: req.body.time
     };
-    req.body.runs =[];
+    req.body.runs =[];  // an empty array to get the run data;
     req.body.runs.push(runToSave);
 
     var new_lake= Lake(req.body);
@@ -45,7 +45,7 @@ router.post('/', function(req, res, next)
     } );  // end save new lake
 });
 
-
+// adds data for new run;
 router.post('/addRun',function(req, res, next)
 {
     console.log("I am the body", req.body);
@@ -76,8 +76,8 @@ router.post('/addRun',function(req, res, next)
         //And sort dateRun
         lake.runs.sort(function(a, b)
         {
-            if (a.time < b.time) { return 1;  }
-            if (a.time > b.time) { return -1; }
+            if (a.time > b.time) { return 1;  }
+            if (a.time < b.time) { return -1; }
             return 0;
         });
 
@@ -104,14 +104,14 @@ router.post('/addRun',function(req, res, next)
 router.post('/deleteLake', function (req, res,err)
 {
     var lake_to_delete_name= req.body.name;
-    Lake.findOne({name:lake_to_delete_name}, function(err, bird)
+    Lake.findOne({name:lake_to_delete_name}, function(err, lake)
     {
         if(err)
         {
             return next(err)}
-        if(!bird)
+        if(!lake)
         {
-            return next(new Error('No bird found with name ' + bird_to_delete_name) )
+            return next(new Error('No lake found with name ' + lake_to_delete_name) )
         }
         Lake.remove({name:lake_to_delete_name}, function (err)
         {

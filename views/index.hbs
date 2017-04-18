@@ -2,7 +2,7 @@
 
 <div class="addNewRun">
     <h3>Add new Run</h3>
-
+    <!-- standard add new run form ;-->
     <form action="/" method="POST">
         Lake Name: <input name="name" type="text" required>
         <br>
@@ -18,6 +18,7 @@
     </form>
 </div>
 <hr>
+<!-- lakes is an array and runs is an array;  -->
 <div class="RunData">
     <h3>All Runs</h3>
     {{# each Lakes}}
@@ -26,12 +27,13 @@
         <p>Runs for :{{this.name}} lake </p>
         <ul>
             {{#each this.runs}}
-                <li>Run data:{{this.dateRun}}&nbsp&nbsp:{{this.time}}</li>
+                <!-- dateformatter is the helper helps in formatting the date -->
+                <li>Run data:{{dateFormatter this.dateRun}}&nbsp&nbsp:{{this.time}}</li>
             {{else}}
                 <li>No Runs reported</li>
             {{/each}}
         </ul>
-
+        <!-- add new run form ;  -->
         <form action="/addRun" method="POST">
             <input name="dateRun" type="date" required>
             <input name="time" type="text" required>
@@ -39,6 +41,7 @@
             <input name="name" type="hidden" value="{{this.name}}">
             <input name="add" type="submit" value="Add new run">
         </form>
+        <!-- add delete form;some hidden values for calculations; ;  -->
         <form action="/deleteLake" method="post">
             <input name="_id" type="hidden" value="{{this._id}}">
             <input name="name" type="hidden" value="{{this.name}}">
@@ -46,6 +49,4 @@
         </form>
         <hr>
     {{/each}}
-
-
 </div>

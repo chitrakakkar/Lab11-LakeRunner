@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var flash = require('express-flash');
 var session = require('express-session');
+var hbs= require('express-handlebars');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -17,6 +18,10 @@ var url = 'mongodb://CK:' + mongo_pw + '@localhost:27017/lakes?authSource=admin'
 mongoose.connect(url);
 
 
+// require the helper just created
+var hbshelpers = require('./hbshelpers/helpers');
+
+
 var app = express();
 
 app.use(session({secret:'top secret!'}));
@@ -24,6 +29,12 @@ app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
+app.engine('.hbs', hbs({
+  extname:'.hbs',
+  defaultLayout: 'layout',
+  helpers: hbshelpers     // Add the helpers
+}));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
