@@ -17,8 +17,8 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next)
 {
     //client-side validation done;no blank field would be sent to the DB
-    // gets daterun from the user or default is date.now();
-    var runToSave={RunDate:req.body.dateRun || Date.now(),
+    // gets dateRun from the user or default is date.now();
+    var runToSave={dateRun:req.body.dateRun || Date.now(),
         time: req.body.time
     };
     req.body.runs =[];  // an empty array to get the run data;
